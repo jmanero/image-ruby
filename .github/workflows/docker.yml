@@ -12,6 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build Image
+        working-directory: 'oraclelinux:8'
         run: |
-          cd oraclelinux\:8
-          docker build .
+          docker build --tag jmanero/ruby:2.7.0+ol8+build.${{ github.run_number }} --tag jmanero/ruby:2.7.0+ol8+latest .
+      - name: Push Image to Docker Hub
+        run: |
+          echo '${{ secrets.DOCKER_TOKEN }}' | docker login -u jmanero --password-stdin
+          docker push jmanero/ruby:2.7.0+ol8+build.${{ github.run_number }} jmanero/ruby:2.7.0+ol8+latest
