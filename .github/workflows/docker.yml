@@ -7,6 +7,7 @@ on:
 jobs:
   270_ol8:
     name: Build Ruby 2.7.0 on Oracle Linux 8
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
