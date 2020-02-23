@@ -1,0 +1,16 @@
+---
+name: Build Docker Images
+
+on:
+  push: { branches: [master] }
+
+jobs:
+  270_ol8:
+    name: Build Ruby 2.7.0 on Oracle Linux 8
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Image
+        run: |
+          cd oraclelinux\:8
+          docker build .
