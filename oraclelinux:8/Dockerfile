@@ -59,8 +59,10 @@ COPY src/etc /opt/ruby/etc
 ENV PATH="/opt/ruby/bin:${PATH}"
 
 ARG BUILD_ID=none
+ARG BUILD_URL=none
 
 MAINTAINER "John Manero <john.manero@gmail.com>"
 LABEL maintainer="John Manero <john.manero@gmail.com>"
 LABEL source="https://github.com/jmanero/image-ruby"
 LABEL build=${BUILD_ID}
+LABEL build_url=${BUILD_URL}

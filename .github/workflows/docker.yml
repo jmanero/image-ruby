@@ -14,10 +14,14 @@ jobs:
 
       - name: Build Image
         env:
-          build_id: 'GitHub :: ${{ github.repository }} :: ${{ github.workflow }} :: ${{ github.run_id }}'
+          build_id:  'GitHub :: ${{ github.repository }} :: ${{ github.workflow }} :: ${{ github.run_id }}'
+          build_url: https://github.com/${{ github.repository }}/runs/${{ github.run_id }}
 
         run: |
-          docker build --file oraclelinux\:8/Dockerfile --build-arg BUILD_ID=${{ env.build_id }} --tag jmanero/ruby:2.7.0-ol8 .
+          docker build  --file oraclelinux\:8/Dockerfile \
+                        --build-arg BUILD_ID='${{ env.build_id }}' \
+                        --build-arg BUILD_URL='${{ env.build_url }}' \
+                        --tag jmanero/ruby:2.7.0-ol8 .
 
       - name: Push Image to Docker Hub
         run: |
