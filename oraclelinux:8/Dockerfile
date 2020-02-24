@@ -25,10 +25,10 @@ ARG RUBY_CONFIG_FLAGS="--prefix /opt/ruby --disable-install-doc --disable-jit-su
 RUN mkdir -p /build
 
 ## Resolve URL for Ruby source artifact
-RUN curl -sS ${RUBY_SRC_INDEX} | fgrep ${RUBY_SRC_ARTIFACT} | awk '{ print $2; }' > /build/sources
+RUN curl -sS ${RUBY_SRC_INDEX} | fgrep ${RUBY_SRC_ARTIFACT} | awk '{ print $2; }' > /build/source-url
 
 ## Fetch artifact and write SHA256 checksum to a file
-RUN curl -sSL $(cat /build/sources) > /build/${RUBY_SRC_ARTIFACT}
+RUN curl -sSL $(cat /build/source-url) > /build/${RUBY_SRC_ARTIFACT}
 RUN echo "${RUBY_SRC_SHA256}  /build/${RUBY_SRC_ARTIFACT}" >> /build/shasums
 
 ## Validate and extract source artifacts
@@ -52,5 +52,15 @@ RUN microdnf install openssl-libs && microdnf clean all
 ## Import build result
 COPY --from=build /opt/ruby /opt/ruby
 
+## Configure gem
+COPY src/etc /opt/ruby/etc
+
 ## Add ruby executables to path
 ENV PATH="/opt/ruby/bin:${PATH}"
+
+ARG BUILD_ID=none
+
+MAINTAINER "John Manero <john.manero@gmail.com>"
+LABEL maintainer="John Manero <john.manero@gmail.com>"
+LABEL source="https://github.com/jmanero/image-ruby"
+LABEL build=${BUILD_ID}
