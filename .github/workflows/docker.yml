@@ -15,7 +15,7 @@ jobs:
       - name: Build Image
         env:
           build_id:  'GitHub :: ${{ github.repository }} :: ${{ github.workflow }} :: ${{ github.run_id }}'
-          build_url: https://github.com/${{ github.repository }}/runs/${{ github.run_id }}
+          build_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
         run: |
           docker build  --file oraclelinux\:8/Dockerfile \
