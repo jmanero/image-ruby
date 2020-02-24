@@ -21,9 +21,9 @@ jobs:
           docker build  --file oraclelinux\:8/Dockerfile \
                         --build-arg BUILD_ID='${{ env.build_id }}' \
                         --build-arg BUILD_URL='${{ env.build_url }}' \
-                        --tag jmanero/ruby:2.7.0-ol8 .
+                        --tag jmanero/ruby:2.7.0-ol8 --tag jmanero/ruby:latest .
 
       - name: Push Image to Docker Hub
         run: |
           echo '${{ secrets.DOCKER_TOKEN }}' | docker login -u jmanero --password-stdin
-          docker push jmanero/ruby:2.7.0-ol8
+          docker push jmanero/ruby:2.7.0-ol8 jmanero/ruby:latest
